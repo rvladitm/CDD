@@ -1,62 +1,93 @@
-#include <stdio.h>
-#include <iostream>
-#include <string.h>
-#include <stdlib.h>
-#include <sstream> 
+// CPP program to find value of derivative of 
+// a polynomial. 
+#include <bits/stdc++.h> 
 
+using namespace std; 
 
-using namespace std;
+long long derivada(string termino, int val)  //EVALUA POLINOMIO DERIVADO
+{ 
+	string coef = ""; 
+	int i; 
+	for (i = 0; termino[i] != 'x'; i++) 
+		coef.push_back(termino[i]); 
+	long long coeff = atol(coef.c_str()); // coeficientes
+
+	string pot = ""; 
+	for (i = i + 2; i != termino.size(); i++) 
+		pot.push_back(termino[i]); 
+	long long exp = atol(pot.c_str()); 
+	return coeff * exp * pow(val, exp - 1); 
+} 
+
+long long evaluar(string termino, int val) //EVALUA POLINOMIO SIN DERIVAR
+{ 
+	string coef = ""; 
+	int i; 
+	for (i = 0; termino[i] != 'x'; i++) 
+		coef.push_back(termino[i]); 
+	int coeff = atol(coef.c_str()); 
+
+	string pot = ""; 
+	for (i = i + 2; i != termino.size(); i++) 
+		pot.push_back(termino[i]); 
+	int exp = atol(pot.c_str()); 
+    
+	return coeff * pow(val, exp); //Evalua 
+} 
+
+long long derivativeVal(string& poly, int val) 
+{ 
+	long long ans = 0; 
+	istringstream is(poly); 
+	string termino; 
+	while (is >> termino) { 
+
+        //cout<< " : "<<termino<<endl; separa el string por partes "4x^3" "+" "3x^1" "+" "2x^2"
+	
+		if (termino == "+") 
+			continue; 
+		else
+			ans = (ans + derivada(termino, val));
+            
+	}     
+	return ans; 
+} 
+
+long long polinomio(string& poly, int val) 
+{ 
+	long long ans = 0; 
+
+	istringstream is(poly); 
+	string termino; 
+	while (is >> termino) { 
+		if (termino == "+") 
+			continue; 
+		else
+			ans = (ans + evaluar(termino, val));         
+	}     
+	return ans; 
+}
+
 
 int main(int argc, char const *argv[])
 {
-    string a;
-    int aux=0, aux2=0, aux3=0;
-    int B[100], E[100];
-    int i;
- 
-    cout<<"\n Polinomio : ";  //polinomios de la forma  1x^128 +32x^45 -20x +12
-
-    for(int i= 1; i<argc; i++)
-    {
-        cout<<""<<argv[i];   
-    }
-    cout<<"\n\n\n";
- 
-    for (i = 1; i < argc; i++)
-    {
-        a = {argv[i]}; //guardo el char argv en un string 
-        aux = stol(a); //Tomo las constantes del string
-        B[i]=aux;  //Guardo en un arreglo los enteros
-        aux2=sizeof(*B); // Tamaño del arreglo generado 
-    } 
-    cout<<endl;
+    string str2;
+    int val = -1;
+    int iter = 1;
+    str2 = argv[1]; //Guarda el polinomio de la forma "4x^3 + 3x^1 + 2x^2"
+    
+    
+    cout<<"\nPolinomio :"<<str2<<endl;
+    cout << "Polinomio evaluado en x["<<val<<"] = "<< polinomio(str2, val)<<endl;
+    cout << "Derivada de polinomio en x["<<val<<"] = "<< derivativeVal(str2, val)<<endl;
 
    
-    for (i = 0; i < aux2; i++)
-    {
-        if(a[i]=='^')
-        {
-            string e; 
-            e = a[i+1];
-            E[i] = stol(e);
-            aux3 = sizeof(*E);
+   //newton para 14 iteraciones 
+    while(iter < 14){
 
-        }
-    }
-    
-    //Muestra constantes  del Polinomio 
-    for (i = 1; i <= aux2; i++)
-    {
-        cout<< " "<<B[i];
-    }
 
-    for (i = 0; i < aux3; i++)
-    {
-        cout<< " "<<E[i];
+        iter++;
     }
-    
+ 
+} 
 
-    
-    
-    cout<<"\n\n";
-}
