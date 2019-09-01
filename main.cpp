@@ -1,6 +1,8 @@
-// CPP program to find value of derivative of 
-// a polynomial. 
 #include <bits/stdc++.h> 
+#include <string>
+#include <iostream>
+
+
 
 using namespace std; 
 
@@ -69,25 +71,45 @@ long long polinomio(string& poly, int val)
 }
 
 
+double newton(double x, double y)
+{
+
+}
+
 int main(int argc, char const *argv[])
 {
     string str2;
-    int val = -1;
+    float val = -1;
     int iter = 1;
     str2 = argv[1]; //Guarda el polinomio de la forma "4x^3 + 3x^1 + 2x^2"
+
+	float  p=0;
     
-    
+    float f,fprim;
+	float div=0;
+
+	float tol;
+
     cout<<"\nPolinomio :"<<str2<<endl;
     cout << "Polinomio evaluado en x["<<val<<"] = "<< polinomio(str2, val)<<endl;
     cout << "Derivada de polinomio en x["<<val<<"] = "<< derivativeVal(str2, val)<<endl;
 
-   
-   //newton para 14 iteraciones 
+	f = polinomio(str2, val);
+	fprim = derivativeVal(str2, val);
+	div = f/fprim;
+
+   //TESTEANDO AUN 
+   //newton para 14 iteraciones   
     while(iter < 14){
 
-
-        iter++;
+		p = val + ( float(polinomio(str2, val))/float(derivativeVal(str2, val)) );
+		if( abs(p-val) < tol)
+		{
+			val = p;
+	    	iter++;
+		}
+	
     }
- 
+	cout<<"\n Solución  : "<<p;
 } 
 
