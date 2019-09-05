@@ -1,7 +1,6 @@
-#include <bits/stdc++.h> 
-#include <string>
+#include <complex>
 #include <iostream>
-
+#include <string>
 
 
 using namespace std; 
@@ -71,11 +70,6 @@ long long polinomio(string& poly, int val)
 }
 
 
-double newton(double x, double y)
-{
-
-}
-
 int main(int argc, char const *argv[])
 {
     string str2;
@@ -94,22 +88,23 @@ int main(int argc, char const *argv[])
     cout << "Polinomio evaluado en x["<<val<<"] = "<< polinomio(str2, val)<<endl;
     cout << "Derivada de polinomio en x["<<val<<"] = "<< derivativeVal(str2, val)<<endl;
 
-	f = polinomio(str2, val);
-	fprim = derivativeVal(str2, val);
-	div = f/fprim;
+	//numero de iteraciones
+	int iteraciones = 5;
 
    //TESTEANDO AUN 
    //newton para 14 iteraciones   
-    while(iter < 14){
+    while(iter < iteraciones){
 
 		p = val + ( float(polinomio(str2, val))/float(derivativeVal(str2, val)) );
-		if( abs(p-val) < tol)
+
+		f = fabs((p-val)/p);
+
+		if(f < 10)
 		{
-			val = p;
+			val = real(p);
 	    	iter++;
 		}
-	
     }
-	cout<<"\n Solución  : "<<p;
+	cout<<"\n Solución  : "<<p<<" con "<<iter<<" iteraciones";
 } 
 
